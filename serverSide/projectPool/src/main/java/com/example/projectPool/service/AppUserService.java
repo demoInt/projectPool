@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.projectPool.dto.LoginDTO;
+import com.example.projectPool.dto.ForgotPasswordDTO;
 import com.example.projectPool.entity.AppUser;
 import com.example.projectPool.entity.Customer;
 import com.example.projectPool.entity.Owner;
@@ -64,5 +65,24 @@ public class AppUserService {
 		return appUserRepository.findByEmailAndPassword(loginDTO.getUsername(), loginDTO.getPassword());
 	}
 	
+	public ForgotPasswordDTO reset(String email , String activationCode , String password)
+	{
+		ForgotPasswordDTO forgotPasswordDTO = new ForgotPasswordDTO() ;
+		forgotPasswordDTO.setEmail(email);
+		forgotPasswordDTO.setMessage("Activation Code can't be verified");
+		forgotPasswordDTO.setStatus(false);
+		
+		AppUser appUser = appUserRepository.findByEmail(email);
+		
+		if(appUser.getActivationCode().equals(activationCode))
+		{
+			appUser.setPassword(password) ;
+			appUserRepository.save(appUser) ;
+			
+			forgotPasswordDTO.setMessage("Password reset Successfull");
+			forgotPasswordDTO.setStatus(true);
+		}		
+		return forgotPasswordDTO;
+	}
 	
 }

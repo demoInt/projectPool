@@ -33,4 +33,30 @@ public class MailService {
 		return activationCode ;
 	}
 	
+	public String passwordResetLink(String email) throws Exception
+	{
+		MimeMessage mime = javaMailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(mime);
+		
+		helper.setTo(email);
+		helper.setSubject("Password Reset Form");
+		String activationCode = Util.generateActivationCode() ;
+		
+		StringBuilder link = new StringBuilder() ;
+		
+		link.append("<h1>Reset Password</h1>");
+		link.append("<form action='http://localhost:9090/admin/resetPasswordLink'>") ;
+		link.append("<input type='hidden' name = 'email' value = '"+email+"'>") ;
+		link.append("<input type='hidden' name = 'activationCode' value = '"+activationCode+"'>") ;
+		link.append("New Password : <input type='password' name = 'password'><br>") ;
+		link.append("<input type='submit' value ='Reset'><br>");
+		link.append("<form>") ;
+		
+		helper.setText(link.toString(),true);
+		
+		javaMailSender.send(mime);
+		
+		return activationCode ;
+	}
+	
 }
