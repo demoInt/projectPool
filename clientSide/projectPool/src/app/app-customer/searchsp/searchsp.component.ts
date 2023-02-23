@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { SearchspService } from './searchsp.service';
 
 @Component({
   selector: 'app-searchsp',
@@ -7,4 +9,29 @@ import { Component } from '@angular/core';
 })
 export class SearchspComponent {
 
+    basicSearch : FormGroup ;
+
+    basicSearchResults : any ;
+    status : boolean = false ;
+    message : string = "" ;
+
+    constructor(private service : SearchspService, private formBuilder : FormBuilder){
+        this.basicSearch = formBuilder.group({
+                                                title : new FormControl('',Validators.required) 
+                                             });
+    }
+
+    searchBasic()
+    {
+      this.service.searchBasic(this.basicSearch.value.title).subscribe( r1  =>  {
+                                                                                  this.basicSearchResults = r1.pools ;
+                                                                                  this.message = r1.message ;
+                                                                                  this.status = r1.status ;
+                                                                                });       
+    }
+
+  get title()
+  {
+    return this.basicSearch.get('title');
+  }
 }

@@ -9,5 +9,9 @@ export class SearchspService {
   url : string = 'http://localhost:9090/swimmingPool';
 
   constructor(private httpClient : HttpClient) { }
-  
+
+  searchBasic(title : any)
+  {
+    return this.httpClient.get<any>(this.url + '/findPoolByName/'+title) ;
+  }
 }

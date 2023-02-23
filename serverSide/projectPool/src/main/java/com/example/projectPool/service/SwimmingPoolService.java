@@ -1,10 +1,14 @@
 package com.example.projectPool.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.collections4.IterableUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.projectPool.dto.SwimmingPoolBasicSearchDTO;
 import com.example.projectPool.entity.AppUser;
 import com.example.projectPool.entity.Owner;
 import com.example.projectPool.entity.SwimmingPool;
@@ -44,8 +48,19 @@ public class SwimmingPoolService {
 		return swimmingPoolRepository.findById(id) ;
 	}
 	
-	public SwimmingPool findByTitle(String title)
+	public SwimmingPoolBasicSearchDTO findByTitle(String title)
 	{
-		return swimmingPoolRepository.findByTitle(title);
+		Iterable<SwimmingPool> list = swimmingPoolRepository.findAllByTitleLike("%"+title+"%") ; 
+		SwimmingPoolBasicSearchDTO basicSearchDTO = new SwimmingPoolBasicSearchDTO() ;
+		basicSearchDTO.setMessage("Sorry Can't Find Anything to your needs");
+		basicSearchDTO.setStatus(false);		
+		if(IterableUtils.size(list) != 0)
+		{
+			basicSearchDTO.setPools(list);
+			basicSearchDTO.setMessage("Check below and find pools to your need");
+			basicSearchDTO.setStatus(true);
+		}
+		
+		return basicSearchDTO;
 	}
 }
