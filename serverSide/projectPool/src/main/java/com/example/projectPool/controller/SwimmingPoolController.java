@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.projectPool.dto.SwimmingPoolAdvancedSearchParametersDTO;
 import com.example.projectPool.dto.SwimmingPoolBasicSearchDTO;
 import com.example.projectPool.entity.SwimmingPool;
 import com.example.projectPool.service.SwimmingPoolService;
@@ -57,5 +58,11 @@ public class SwimmingPoolController {
 	public ResponseEntity<SwimmingPoolBasicSearchDTO>findPoolByName(@PathVariable String name)
 	{
 		return ResponseEntity.ok(swimmingPoolService.findByTitle(name)) ;
+	}
+	
+	@PostMapping("advancedSearch") 
+	public ResponseEntity<SwimmingPoolBasicSearchDTO> findByAdvancedSearch(@RequestBody SwimmingPoolAdvancedSearchParametersDTO search)
+	{
+		return ResponseEntity.ok(swimmingPoolService.advancedSearch(search.getCity(), search.getState(), search.getCountry()));
 	}
 }

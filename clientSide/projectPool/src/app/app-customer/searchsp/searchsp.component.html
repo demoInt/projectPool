@@ -1,4 +1,4 @@
-<form [formGroup]="basicSearch" class="form-group" (ngSubmit)="searchBasic()">
+<form [formGroup]="basicSearch" class="form-group" (ngSubmit)="searchBasic()" *ngIf="basicSearchFormStatus">
     <input type="text" formControlName="title"  id="title" class="form-control">
     <div *ngIf="title?.invalid && title?.touched" class="alert alert-danger">
         Enter something to search
@@ -7,7 +7,7 @@
 </form>
 
 {{message}}
-<div *ngIf="status == true">
+<div *ngIf="statusBasic == true">
     <table class="table">
         <thead class="thead-dark">
           <tr>
@@ -36,3 +36,45 @@
       </table>
 </div>
 
+<!-- aAdvanced Search -->
+<button (click)="toShowTableAdSearch()" class="btn btn-primary">Advanced Search</button>
+
+<div *ngIf="advancedSearchFormStatus == true" >
+  <form [formGroup]="advancedSearch" (ngSubmit)="searchAdvanced()" class="form-group">
+    City : <input type="text" formControlName="city" id="city" class="form-control" >
+    State : <input type="text" formControlName="state" id="state" class="form-control">
+    Country : <input type="text" formControlName="country" id="country" class="form-control">
+    
+    <input type="submit" id="submit" class="btn btn-primary">
+  </form>
+</div>
+
+{{messageAdvanced}}
+<div *ngIf="statusAdvanced == true">
+    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Plot No</th>
+            <th scope="col">Street Name</th>
+            <th scope="col">Area Name</th>
+            <th scope="col">City</th>
+            <th scope="col">State</th>
+            <th scope="col">Country</th>
+            <th scope="col">Pincode</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let a of advancedSearchResults">
+            <td>{{a.title}}</td>
+            <td>{{a.plotNo}}</td>
+            <td>{{a.streetName}}</td>
+            <td>{{a.areaName}}</td>
+            <td>{{a.city}}</td>
+            <td>{{a.state}}</td>
+            <td>{{a.country}}</td>
+            <td>{{a.pinCode}}</td>
+          </tr>
+        </tbody>
+      </table>
+</div>

@@ -13,6 +13,5 @@ public class SwimmingPoolBasicSearchDTO {
 	
 	private boolean status ;
 	private String message ;
-	private Iterable<SwimmingPool> pools ;
-	
+	private Iterable<SwimmingPool> pools ;	
 }

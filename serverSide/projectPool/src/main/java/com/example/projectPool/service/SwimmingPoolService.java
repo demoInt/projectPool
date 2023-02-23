@@ -60,7 +60,23 @@ public class SwimmingPoolService {
 			basicSearchDTO.setMessage("Check below and find pools to your need");
 			basicSearchDTO.setStatus(true);
 		}
-		
 		return basicSearchDTO;
 	}
+	
+	public SwimmingPoolBasicSearchDTO advancedSearch(String city , String state, String country)
+	{
+		Iterable<SwimmingPool> list = swimmingPoolRepository.findAllByCityLikeAndStateLikeAndCountryLike("%"+city+"%", "%"+state+"%", "%"+country+"%") ; 
+		SwimmingPoolBasicSearchDTO basicSearchDTO = new SwimmingPoolBasicSearchDTO() ;
+		basicSearchDTO.setMessage("Sorry Can't Find Anything to your needs");
+		basicSearchDTO.setStatus(false);		
+		if(IterableUtils.size(list) != 0)
+		{
+			basicSearchDTO.setPools(list);
+			basicSearchDTO.setMessage("Check below and find pools to your need");
+			basicSearchDTO.setStatus(true);
+		}
+		return basicSearchDTO;
+	}
+	
+	
 }
