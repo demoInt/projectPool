@@ -13,7 +13,6 @@ public interface SwimmingPoolRepository extends CrudRepository<SwimmingPool , In
 	
 	public Iterable<SwimmingPool> findByOwner(Owner owner);
 	
-//	@Query("select a from SwimmingPool a where a.city like %'city'% and a.state like %'state'% and a.country like %'country'% ")
 	public Iterable<SwimmingPool> findAllByCityLikeAndStateLikeAndCountryLike(String city , String state , String country) ;
 	
 }
