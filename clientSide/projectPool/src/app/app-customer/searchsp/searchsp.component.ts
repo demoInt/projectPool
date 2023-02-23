@@ -51,7 +51,11 @@ export class SearchspComponent {
 
   toShowTableAdSearch()
   {
+    //to change status of basic searches
     this.basicSearchFormStatus = false ;
+    this.statusBasic = false ;
+    this.message = "" ;
+
     this.advancedSearchFormStatus = true ;
 
   }
@@ -65,5 +69,4 @@ export class SearchspComponent {
                                                                         this.messageAdvanced = r1.message ;
                                                                       });
   }
-
 }
