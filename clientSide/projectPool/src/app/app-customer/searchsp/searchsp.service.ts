@@ -14,4 +14,7 @@ export class SearchspService {
   {
     return this.httpClient.get<any>(this.url + '/findPoolByName/'+title) ;
   }
+
+  
+
 }
